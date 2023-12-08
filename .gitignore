@@ -1,0 +1,34 @@
+# CodeIgniter-specific
+/application/config/database.php/
+/application/config/testing/
+/application/config/staging/
+/application/config/production/
+
+# Composer
+/vendor/
+
+# System and logs
+/system/
+/application/logs/
+
+# Environment-specific files
+/application/config/config_development.php
+/application/config/config_testing.php
+/application/config/config_staging.php
+/application/config/config_production.php
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Thumbnails folder
+/uploads/thumbnails/
+
+# Backup files
+*.bak
+*.backup
+*.sql.gz
+
+# User-specific files
+*.sublime-project
+*.sublime-workspace
