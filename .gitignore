@@ -1,8 +1,9 @@
 # CodeIgniter-specific
-/application/config/database.php/
+/application/config/database.php
 /application/config/testing/
 /application/config/staging/
 /application/config/production/
+
 
 # Composer
 /vendor/
