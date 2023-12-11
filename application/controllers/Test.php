@@ -98,6 +98,7 @@ class Test extends CI_Controller {
 		$encryptedText = 'MDEyMzQ1Njc4OTEyMzQ1NnM3dmd0NEgvNTM3SHBsVXdHdjBhL0E9PQ==';
 		$decryptedText = $this-> decryptString($encryptedText, DRIVEN_EN_DE_KEY);
 		debug_var('복호화된 문자열: ' . $decryptedText);
+		echo "TEST";
 	}
 
 }
