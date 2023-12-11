@@ -3,7 +3,7 @@
 /application/config/testing/
 /application/config/staging/
 /application/config/production/
-/application/sessions
+/application/config/config.php
 
 
 # Composer
