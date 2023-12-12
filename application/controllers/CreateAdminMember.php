@@ -72,8 +72,6 @@ class CreateAdminMember extends CI_Controller {
 			'sms_api_key' => $sms_api_key,
 			'alim_id' => $alim_id,
 			'alim_sender_key' => $alim_sender_key,
-			'landing_type' => $landing_type,
-			'landing_type_value' => $landing_type_value,
 			'created_at' => date("Y-m-d H:i:s"),
 		);
 
@@ -84,7 +82,8 @@ class CreateAdminMember extends CI_Controller {
 		$landing_params = array(
 			'admin_code' => $admin_code,
 			'landing_code' => $landing_code,
-			'domain' => $domain,
+			'landing_type' => $landing_type,
+			'landing_type_value' => $landing_type_value,
 			'created_at' => date("Y-m-d H:i:s"),
 		);
 
