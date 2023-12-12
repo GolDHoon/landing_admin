@@ -70,6 +70,7 @@ class CreateAdminMember extends CI_Controller {
 			'sms_api_key' => $sms_api_key,
 			'alim_id' => $alim_id,
 			'alim_sender_key' => $alim_sender_key,
+			'created_at' => date("Y-m-d H:i:s"),
 		);
 
 		if(!empty($sms_sender)){
