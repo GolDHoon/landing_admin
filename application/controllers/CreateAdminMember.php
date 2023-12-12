@@ -68,10 +68,13 @@ class CreateAdminMember extends CI_Controller {
 			'admin_code' => $admin_code,
 			'sms_id' => $sms_id,
 			'sms_api_key' => $sms_api_key,
-			'sms_sender' => $this->drivenlib->encrypt($sms_sender),
 			'alim_id' => $alim_id,
 			'alim_sender_key' => $alim_sender_key,
 		);
+
+		if(!empty($sms_sender)){
+			$params['sms_sender'] = $this->drivenlib->encrypt($sms_sender);
+		}
 
 		$landing_params = array(
 			'admin_code' => $admin_code,
