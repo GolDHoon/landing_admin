@@ -11,7 +11,7 @@ class ConsultModel extends CI_Model {
 
 	public function consult_lists($params)
 	{
-		$this->db->select('a.*,b.domain');
+		$this->db->select('a.*,b.landing_type_value');
 		$this->db->from('consult_member a');
 		$this->db->join('admin_landing b', 'a.landing_code = b.landing_code');
 
@@ -38,7 +38,7 @@ class ConsultModel extends CI_Model {
 
 	public function get_data($limit, $offset, $params)
 	{
-		$this->db->select('a.*,b.domain');
+		$this->db->select('a.*,b.landing_type_value');
 		$this->db->from('consult_member a');
 		$this->db->join('admin_landing b', 'a.landing_code = b.landing_code');
 		if($params['condition'] && $params['search_value']){

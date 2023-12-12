@@ -72,7 +72,7 @@ class Common extends CI_Controller
 			}
 			$sheet -> setCellValue("A{$idx}", $this->drivenlib->decrypt($val['name']));
 			$sheet -> setCellValue("B{$idx}", $this->drivenlib->decrypt($val['phone']));
-			$sheet -> setCellValue("C{$idx}", $val['domain']);
+			$sheet -> setCellValue("C{$idx}", $val['landing_type_value']);
 			$sheet -> setCellValue("D{$idx}", $status);
 			$sheet -> setCellValue("E{$idx}", $val['utm_source']);
 			$sheet -> setCellValue("F{$idx}", $val['utm_medium']);

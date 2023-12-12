@@ -35,7 +35,7 @@ class AdminMember extends CI_Model {
 	}
 
 	public function get_landing_list($param){
-		$this->db->select('b.landing_code,b.domain');
+		$this->db->select('b.landing_code,b.landing_type_value');
 		$this->db->from('admin_member a');
 		$this->db->join('admin_landing b', 'a.admin_code = b.admin_code');
 		if(!empty($param)){

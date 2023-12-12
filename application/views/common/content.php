@@ -182,7 +182,7 @@
 				<td><?=$i;?></td>
 				<td><?=$row->name;?></td>
 				<td><?=$row->phone;?></td>
-<!--				<td>--><?php //=$row->domain;?><!--</td>-->
+<!--				<td>--><?php //=$row->landing_type_value;?><!--</td>-->
 				<td>
 					<select class="form-control status_select" data-sidx="<?=$row->idx;?>">
 						<option value="0" <? if($row->status == '0') echo 'selected'; ?>>상담요청</option>
