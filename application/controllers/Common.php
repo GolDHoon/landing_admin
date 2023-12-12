@@ -150,9 +150,23 @@ class Common extends CI_Controller
 
 	public function send_alim(){
 		$token = $this->drivenlib->get_alim_token();
-		debug_var($token);
+//		debug_var($token);
 		if(!empty($token)){
+			$arr_result = (array)$this->get_alim_template_list($token);
 
+			if($arr_result['code'] == 0){
+				foreach ($arr_result['list'] as $v){
+					debug_var('msg - '.$v->templtContent);
+					debug_var('title - '.$v->templtName);
+					debug_var('t_code - '.$v->templtCode);
+					debug_var('created_at - '.$v->cdate);
+				}
+			}else{
+				// code error
+			}
+
+		}else{
+			// token error
 		}
 
 	}
@@ -189,19 +203,15 @@ class Common extends CI_Controller
 		$error_msg = curl_error($oCurl);
 		curl_close($oCurl);
 
-		// 리턴 JSON 문자열 확인
-		print_r($ret . PHP_EOL);
-
 		// JSON 문자열 배열 변환
 		$retArr = json_decode($ret);
-
-		// 결과값 출력
-		print_r($retArr);
 
 		/*
 		code : 0 성공, 나머지 숫자는 에러
 		message : 결과 메시지
 		*/
+
+		return $retArr;
 
 	}
 

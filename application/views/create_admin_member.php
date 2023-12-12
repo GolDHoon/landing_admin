@@ -40,13 +40,13 @@
 										<input class="form-control form-control-lg" type="password" name="user_pw" placeholder="PASSWORD  ( 생성할 유저 비밀번호 )" required/>
 									</div>
 									<div class="mb-3">
-										<input class="form-control form-control-lg" type="text" name="sms_id" placeholder="SMS_ID ( 알리고 계정 ID )" required/>
+										<input class="form-control form-control-lg" type="text" name="sms_id" placeholder="SMS_ID ( 알리고 계정 ID )"/>
 									</div>
 									<div class="mb-3">
-										<input class="form-control form-control-lg" type="text" name="sms_sender" placeholder="SMS_SENDER ( 알리고 발신 등록된 전화번호 )" required/>
+										<input class="form-control form-control-lg" type="text" name="sms_sender" placeholder="SMS_SENDER ( 알리고 발신 등록된 전화번호 )"/>
 									</div>
 									<div class="mb-3">
-										<input class="form-control form-control-lg" type="text" name="sms_api_key" placeholder="SMS_API_KEY ( 알리고 기본 API 키 )" required/>
+										<input class="form-control form-control-lg" type="text" name="sms_api_key" placeholder="SMS_API_KEY ( 알리고 기본 API 키 )"/>
 									</div>
 									<div class="mb-3">
 										<input class="form-control form-control-lg" type="text" name="alim_id" placeholder="ALIM_ID ( 알림톡 채널 아이디 )" />
@@ -55,7 +55,7 @@
 										<input class="form-control form-control-lg" type="text" name="alim_sender_key" placeholder="ALIM_SENDER_KEY ( 알림톡 SENDER KEY )" />
 									</div>
 									<div class="mb-3">
-										<input class="form-control form-control-lg" type="text" name="domain" placeholder="DOMAIN ( 랜딩 도메인 )" />
+										<input class="form-control form-control-lg" type="text" name="domain" placeholder="DOMAIN ( 랜딩 도메인 )" required />
 									</div>
 									<div class="text-center mt-3">
 										 <button type="submit" class="btn btn-lg btn-primary">Create</button>
