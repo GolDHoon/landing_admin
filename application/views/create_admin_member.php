@@ -58,7 +58,7 @@
 										<input class="form-control form-control-lg" type="text" name="landing_type" placeholder="0 - driven, 1 - meta, 2 - tiktok"/>
 									</div>
 									<div class="mb-3">
-										<input class="form-control form-control-lg" type="text" name="landing_type_value" placeholder="LANDING_TYPE_VALUE ( 도메인 | api 값 )"/>
+										<input class="form-control form-control-lg" type="text" name="landing_type_value" placeholder="LANDING_TYPE_VALUE ( 도메인 | api 값 )" required/>
 									</div>
 									<div class="text-center mt-3">
 										 <button type="submit" class="btn btn-lg btn-primary">Create</button>
