@@ -91,7 +91,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</a>
 					<ul id="config_menu" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
 						<li class="sidebar-item"><a class="sidebar-link" href="/setting/ip_setting">IP 차단관리</a></li>
-						<li class="sidebar-item"><a class="sidebar-link" href="/setting/sms_template">문자 템플릿 관리</a></li>
+						<? if($_SESSION['user_sms_sender'] != "" && $_SESSION['user_sms_api_key'] != "" && $_SESSION['user_sms_id'] != ""){ ?>
+							<li class="sidebar-item"><a class="sidebar-link" href="/setting/sms_template">문자 템플릿 관리</a></li>
+						<? } ?>
 					</ul>
 				</li>
 
