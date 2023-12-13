@@ -60,9 +60,9 @@ class CreateAdminMember extends CI_Controller {
 		$sms_api_key = $this->input->post('sms_api_key') ?? '';
 		$alim_id = $this->input->post('alim_id') ?? '';
 		$alim_sender_key = $this->input->post('alim_sender_key') ?? '';
-		$domain = $this->input->post('domain') ?? '';
 		$landing_type = $this->input->post('landing_type') ?? 0;
 		$landing_type_value = $this->input->post('landing_type_value') ?? '';
+		$name = $this->input->post('name') ?? '';
 
 		$params = array(
 			'user_id' => $user_id,
@@ -84,6 +84,7 @@ class CreateAdminMember extends CI_Controller {
 			'landing_code' => $landing_code,
 			'landing_type' => $landing_type,
 			'landing_type_value' => $landing_type_value,
+			'name' => $name,
 			'created_at' => date("Y-m-d H:i:s"),
 		);
 
