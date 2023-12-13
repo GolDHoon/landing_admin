@@ -61,7 +61,7 @@
 										<input class="form-control form-control-lg" type="text" name="landing_type_value" placeholder="LANDING_TYPE_VALUE ( 도메인 | api 값 )" required/>
 									</div>
 									<div class="mb-3">
-										<input class="form-control form-control-lg" type="text" name="name" placeholder=" api값 도메인 별칭 ( 키값이므로 도메인별칭 만들어줄것 ) " required/>
+										<input class="form-control form-control-lg" type="text" name="domain_name" placeholder=" api값 도메인 별칭 ( 키값이므로 도메인별칭 만들어줄것 ) " required/>
 									</div>
 									<div class="text-center mt-3">
 										 <button type="submit" class="btn btn-lg btn-primary">Create</button>

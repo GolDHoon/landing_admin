@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<option data-lcode="all">선택</option>
 								<? } ?>
 								<? foreach ($_SESSION['arr_landing_list'] as $v){ ?>
-									<option data-lcode="<?=$v['landing_code'];?>" <? if($v['landing_code'] == $_SESSION['target_landing_code']) echo 'selected'; ?> ><?=$v['name'];?></option>
+									<option data-lcode="<?=$v['landing_code'];?>" <? if($v['landing_code'] == $_SESSION['target_landing_code']) echo 'selected'; ?> ><?=$v['domain_name'];?></option>
 								<? } ?>
 							</select>
 						</div>
