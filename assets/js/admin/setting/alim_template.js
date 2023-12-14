@@ -29,6 +29,7 @@ $("#get_alim_template").on('click',function(){
 		data : '',
 		dataType: 'json',
 		success: function (res) {
+			alert('목록을 가져왔습니다.');
 			location.reload();
 		},
 		error: function (xhr, status, error) {
