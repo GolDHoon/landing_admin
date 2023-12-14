@@ -28,7 +28,7 @@
 							<option value="">선택</option>
 							<option value="orderBy_name" <?php if($params['orderBy_condition'] === 'orderBy_name') echo 'selected'?> >이름</option>
 							<option value="orderBy_phone" <?php if($params['orderBy_condition'] === 'orderBy_phone') echo 'selected'?> >전화번호</option>
-							<option value="orderBy_landing_code" <?php if($params['orderBy_condition'] === 'orderBy_landing_code') echo 'selected'?> >랜딩코드</option>
+<!--							<option value="orderBy_landing_code" --><?php //if($params['orderBy_condition'] === 'orderBy_landing_code') echo 'selected'?><!-- >랜딩코드</option>-->
 							<option value="orderBy_status" <?php if($params['orderBy_condition'] === 'orderBy_status') echo 'selected'?> >상태</option>
 						</select>
 					</div>
@@ -94,6 +94,7 @@
 							</div>
 							<div class="modal-body m-3">
 								<div class="mb-3">
+									<input type="hidden" id="target_sms_idx">
 									<select class="form-select" id="select_template">
 										<option selected>템플릿 선택</option>
 										<? foreach ($templates as $v){ ?>
@@ -113,10 +114,10 @@
 						</div>
 					</div>
 				</div>
-<!--				--><?// if($_SESSION['user_sms_sender'] != "" && $_SESSION['user_sms_api_key'] != ""
-//					&& $_SESSION['user_sms_id'] != "" && $_SESSION['user_alim_id'] != "" && $_SESSION['user_alim_sender_key']){ ?>
-<!--					<button type="button" class="btn btn-warning alim_btn">알림톡 발송</button>-->
-<!--				--><?// } ?>
+				<? if($_SESSION['user_sms_sender'] != "" && $_SESSION['user_sms_api_key'] != ""
+					&& $_SESSION['user_sms_id'] != "" && $_SESSION['user_alim_id'] != "" && $_SESSION['user_alim_sender_key']){ ?>
+					<button type="button" class="btn btn-warning alim_btn">알림톡 발송</button>
+				<? } ?>
 				<div class="modal fade" id="alim_modal" tabindex="-1" role="dialog" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -126,6 +127,13 @@
 							</div>
 							<div class="modal-body m-3">
 								<div class="mb-3">
+									<input type="hidden" id="target_alim_idx">
+									<select class="form-select" id="select_alim_template">
+										<option selected>템플릿 선택</option>
+										<? foreach ($alim_templates as $v){ ?>
+											<option data-tidx="<?=$v['idx']?>" data-title="<?=$v['title']?>"><?=$v['title']?></option>
+										<? } ?>
+									</select>
 								</div>
 								<div>
 									<input type="hidden" id="alim_lists" value="">

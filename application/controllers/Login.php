@@ -68,10 +68,12 @@ class Login extends CI_Controller {
 						if(!in_array($_SESSION['user'],DRIVEN_ADMIN_LIST)){
 							$_SESSION['arr_landing_list'] = $this->AdminMember->get_landing_list($_SESSION['user']) ?? array();
 							$_SESSION['target_landing_code'] = $_SESSION['arr_landing_list'][0]['landing_code'] ?? '';
+							$_SESSION['target_admin_code'] = $_SESSION['arr_landing_list'][0]['admin_code'] ?? '';
 
 						}else{
 							$_SESSION['arr_landing_list'] = $this->AdminMember->get_landing_list('') ?? array();
 							$_SESSION['target_landing_code'] = 'all';
+							$_SESSION['target_admin_code'] = 'all';
 						}
 
 

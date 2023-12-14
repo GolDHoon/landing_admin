@@ -89,6 +89,37 @@ $(document).ready(function () {
 
 	});
 
+	$('.send_alim_btn').on('click',()=>{
+
+		let alim_lists = $("#alim_lists").val();
+		let alim_message = $("#alim_message").val();
+		let alim_idx = $("#target_alim_idx").val();
+
+		if(alim_message === ''){
+			alert('전송 메세지를 선택해주세요.');
+			return;
+		}
+
+		let reqeust_data = {
+			'alim_lists' : alim_lists,
+			'alim_idx' : alim_idx,
+		}
+
+		$.ajax({
+			url: '/common/send_alim',
+			method: 'POST',
+			data : reqeust_data,
+			success: function(response) {
+				alert('발송되었습니다.');
+				location.reload();
+			},
+			error: function(xhr, status, error) {
+				console.error('Ajax request failed:', status, error);
+			}
+		});
+
+	});
+
 	$('.alim_btn').on('click',()=>{
 
 		let checkboxes = document.querySelectorAll('.target_checkbox');
@@ -109,38 +140,6 @@ $(document).ready(function () {
 		$('#alim_modal').modal("show");
 
 		$('#alim_lists').val(checkedValues);
-
-	});
-
-	$('.send_alim_btn').on('click',()=>{
-
-		// let seq_lists = $("#sms_lists").val();
-		// let sms_message = $("#sms_message").val();
-		// let title = $("#select_template").val();
-		//
-		// if(sms_message === ''){
-		// 	alert('전송 메세지를 선택해주세요.');
-		// 	return;
-		// }
-		//
-		// let reqeust_data = {
-		// 	'seq_lists' : seq_lists,
-		// 	'sms_message' : sms_message,
-		// 	'title' : title,
-		// }
-
-		$.ajax({
-			url: '/common/send_alim',
-			method: 'POST',
-			// data : reqeust_data,
-			success: function(response) {
-				alert('발송되었습니다.');
-				location.reload();
-			},
-			error: function(xhr, status, error) {
-				console.error('Ajax request failed:', status, error);
-			}
-		});
 
 	});
 
@@ -178,11 +177,6 @@ $(document).ready(function () {
 			}
 		});
 
-	});
-
-	$("#status").change(()=>{
-		let selectedValue = $(this).val();
-		let idx = $(this).data('sidx');
 	});
 
 	let select_elements = document.querySelectorAll('.status_select');
@@ -224,6 +218,35 @@ $(document).ready(function () {
 				let data = JSON.parse(res);
 				if(data.code){
 					$("#sms_message").val(data.message);
+					$("#target_alim_idx").val(idx);
+				}else{
+					alert(data.message);
+				}
+			},
+			error: function(xhr, status, error) {
+				console.error('Ajax request failed:', status, error);
+			}
+		});
+
+	});
+
+	$("#select_alim_template").on('change',function(){
+		let selectedOption = $('option:selected', this);
+		let idx = selectedOption.data('tidx');
+
+		let request_data= {
+			'idx' : idx,
+		}
+
+		$.ajax({
+			url: '/setting/get_alim_message',
+			method: 'POST',
+			data : request_data,
+			success: function(res) {
+				let data = JSON.parse(res);
+				if(data.code){
+					$("#alim_message").val(data.message);
+					$("#target_alim_idx").val(idx);
 				}else{
 					alert(data.message);
 				}

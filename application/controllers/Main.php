@@ -16,7 +16,7 @@ class Main extends CI_Controller {
 		$this->load->library('pagination');
 
 		$this->load->model(
-			array('ConsultModel','TemplateModel','ConsultBakModel')
+			array('ConsultModel','TemplateModel','ConsultBakModel','AlimTemplateModel')
 		);
 
 	}
@@ -44,6 +44,7 @@ class Main extends CI_Controller {
 			$arr_result['created_at'] = "$oneMonthAgo - $currentDate";
 		}
 		$arr_result['templates'] = $this->TemplateModel->get_all_data();
+		$arr_result['alim_templates'] = $this->AlimTemplateModel->get_all_data();
 
 		// 알림톡 템플릿
 //		$token = $this->drivenlib->get_alim_token();

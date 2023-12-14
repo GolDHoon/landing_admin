@@ -94,9 +94,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<? if($_SESSION['user_sms_sender'] != "" && $_SESSION['user_sms_api_key'] != "" && $_SESSION['user_sms_id'] != ""){ ?>
 							<li class="sidebar-item"><a class="sidebar-link" href="/setting/sms_template">문자 템플릿 관리</a></li>
 						<? } ?>
+						<? if($_SESSION['user_sms_sender'] != "" && $_SESSION['user_sms_api_key'] != ""
+							&& $_SESSION['user_sms_id'] != "" && $_SESSION['user_alim_id'] != "" && $_SESSION['user_alim_sender_key']){ ?>
+							<li class="sidebar-item"><a class="sidebar-link" href="/setting/alim_template">알림톡 템플릿</a></li>
+						<? } ?>
 					</ul>
 				</li>
-
 			</ul>
 		</div>
 	</nav>
@@ -256,8 +259,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</ul>
 			</div>
 		</nav>
-
-
 
 		<?php echo $content; ?>
 		<?php echo $footer; ?>

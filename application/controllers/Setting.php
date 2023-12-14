@@ -16,7 +16,7 @@ class Setting extends CI_Controller {
 		$this->load->library('pagination');
 
 		$this->load->model(
-			array('IpBlockModel','TemplateModel')
+			array('IpBlockModel','TemplateModel','AlimTemplateModel')
 		);
 
 	}
@@ -292,5 +292,119 @@ class Setting extends CI_Controller {
 
 	}
 
+	public function get_alim_message(){
+
+		$idx = $this->input->post('idx');
+		$arr_result = array();
+
+		try {
+
+			$message = $this->AlimTemplateModel->get_message($idx);
+			$arr_result['code'] = true;
+			$arr_result['message'] = $message[0]['message'];
+
+		}catch (Exception $e){
+			$arr_result['code'] = false;
+			$arr_result['message'] = 'ERROR.';
+			log_message('error','GET MESSAGE ERROR.');
+		}
+
+		echo json_encode($arr_result);
+
+	}
+
+	public function alim_template()
+	{
+
+		$data = $this->data;
+		$data['include_css'] = "/assets/css/admin/setting/setting.css";
+		$data['include_js'] = "/assets/js/admin/setting/alim_template.js";
+
+		$data['page'] = $this->input->get('page') ?? 1;
+		$arr_result = $this->create_pagination_alim($data);
+
+		$data['header'] = $this->load->view('common/header','',TRUE);
+		$data['content'] = $this->load->view('setting/alim_template',$arr_result,TRUE);
+		$data['footer'] = $this->load->view('common/footer','',TRUE);
+		$this->load->view('main',$data);
+
+	}
+
+	private function create_pagination_alim($data){
+
+		$page = $data['page'];
+		$params = array(
+			'per_page' => 20,
+		);
+		$base_url = base_url('setting/alim_template');
+
+		$arr_result = array();
+		$arr_result['arr_lists'] = $this->AlimTemplateModel->template_lists();
+		$config = $this->drivenlib->set_pagination($params,$base_url);
+
+		$config['total_rows'] = $this->AlimTemplateModel->request_count();
+
+		$this->pagination->initialize($config);
+
+		$arr_result['results'] = $this->AlimTemplateModel->get_data($config['per_page'],($page - 1) * $config['per_page'],$params);
+
+		$arr_result['links'] = $this->pagination->create_links();
+
+		$arr_result['params'] = $params;
+
+		return $arr_result;
+	}
+
+	public function delete_alim_template(){
+
+		// 삭제 직접해야함..
+
+		$idx = $this->input->post('idx') ?? '';
+		$code = $this->input->post('code') ?? '';
+
+		$arr_result = $this->delete_request_template($code);
+
+		try {
+
+			if($arr_result['code'] == 0){
+				$this->AlimTemplateModel->delete_template($idx);
+			}
+
+		}catch (Exception $e){
+			log_message('error',$e->getMessage());
+		}
+
+		echo json_encode($arr_result);
+
+	}
+
+	private function delete_request_template($code){
+
+		$_apiURL		=	'https://kakaoapi.aligo.in/akv10/template/del/';
+		$_hostInfo		=	parse_url($_apiURL);
+		$_port			=	(strtolower($_hostInfo['scheme']) == 'https') ? 443 : 80;
+		$_variables		=	array(
+			'apikey'      => $_SESSION['user_sms_api_key'],
+			'userid'      => $_SESSION['user_sms_id'],
+			'token'       => $this->drivenlib->get_alim_token(),
+			'senderkey'   => $_SESSION['user_alim_sender_key'],
+			'tpl_code'    => $code,
+		);
+
+		$oCurl = curl_init();
+		curl_setopt($oCurl, CURLOPT_PORT, $_port);
+		curl_setopt($oCurl, CURLOPT_URL, $_apiURL);
+		curl_setopt($oCurl, CURLOPT_POST, 1);
+		curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($oCurl, CURLOPT_POSTFIELDS, http_build_query($_variables));
+		curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+		$ret = curl_exec($oCurl);
+		$error_msg = curl_error($oCurl);
+		curl_close($oCurl);
+
+		return (array)json_decode($ret);
+
+	}
 
 }
