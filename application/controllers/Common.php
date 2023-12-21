@@ -41,6 +41,11 @@ class Common extends CI_Controller
 		);
 		$arr_lists = $this->ConsultModel->consult_lists($params);
 
+		if(empty($arr_lists)){
+			echo "<script>alert('데이터가 없습니다.');history.go(-1);</script>";
+			exit;
+		}
+
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet -> getActiveSheet();
 		foreach (range(0, 9) as $chr) {
