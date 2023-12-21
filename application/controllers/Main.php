@@ -38,6 +38,27 @@ class Main extends CI_Controller {
 		$data['orderBy_value'] = $this->input->get('orderBy_value') ?? '';
 		$data['page'] = $this->input->get('page') ?? 1;
 
+		$pre_search_value = $data['search_value'];
+
+		if($data['condition'] === 'status'){
+			switch ($data['search_value']){
+				case '상담요청':
+					$data['search_value'] = 0;
+					break;
+				case '상담중':
+					$data['search_value'] = 1;
+					break;
+				case '상담완료':
+					$data['search_value'] = 2;
+					break;
+				case '상담보류':
+					$data['search_value'] = 3;
+					break;
+				default:
+					break;
+			}
+		}
+
 		$arr_result = $this->create_pagination($data);
 
 		if(empty($arr_result['created_at'])){
@@ -53,6 +74,8 @@ class Main extends CI_Controller {
 			$v->phone = $this->drivenlib->decrypt($v->phone);
 			$v->name = $this->drivenlib->decrypt($v->name);
 		}
+
+		$arr_result['params']['search_value'] = $pre_search_value;
 
 		$data['header'] = $this->load->view('common/header','',TRUE);
 		$data['content'] = $this->load->view('common/content',$arr_result,TRUE);
