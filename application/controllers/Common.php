@@ -48,22 +48,18 @@ class Common extends CI_Controller
 
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet -> getActiveSheet();
-		foreach (range(0, 9) as $chr) {
-			$value = '';
-			switch ($chr) {
-				case 0 : $value = '이름'; break;
-				case 1 : $value = '전화번호'; break;
-				case 2 : $value = '도메인'; break;
-				case 3 : $value = '상담상태'; break;
-				case 4 : $value = 'UTM_SOURCE'; break;
-				case 5 : $value = 'UTM_MEDIUM'; break;
-				case 6 : $value = 'UTM_CAMPAIGN'; break;
-				case 7 : $value = 'UTM_TERM'; break;
-				case 8 : $value = 'UTM_CONTENT'; break;
-				case 9 : $value = '상담신청일'; break;
-			}
-			$chr = chr($chr + 65);
-			$sheet -> setCellValue("{$chr}1", $value);
+
+		if(in_array($_SESSION['user'],array('csrental','ethan'))) {
+			$cnt = 10;
+			$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','지역','상담신청일');
+		}else{
+			$cnt = 9;
+			$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','상담신청일');
+		}
+
+		for ($i = 0 ; $i <= $cnt ; $i++){
+			$chr = chr($i + 65);
+			$sheet -> setCellValue("{$chr}1", $arr_header[$i]);
 		}
 
 		$idx = 2;
@@ -84,7 +80,18 @@ class Common extends CI_Controller
 			$sheet -> setCellValue("G{$idx}", $val['utm_campaign']);
 			$sheet -> setCellValue("H{$idx}", $val['utm_term']);
 			$sheet -> setCellValue("I{$idx}", $val['utm_content']);
-			$sheet -> setCellValue("J{$idx}", $val['created_at']);
+			if(in_array($_SESSION['user'],array('csrental','ethan'))) {
+				$region = '';
+				switch ($val['region']) {
+					case 0 : $region = '서울'; break;
+					case 1 : $region = '경기'; break;
+					case 2 : $region = '인천'; break;
+				}
+				$sheet -> setCellValue("J{$idx}", $region);
+				$sheet -> setCellValue("K{$idx}", $val['created_at']);
+			}else{
+				$sheet -> setCellValue("J{$idx}", $val['created_at']);
+			}
 			$idx++;
 		}
 		$prefix = 'member_';
