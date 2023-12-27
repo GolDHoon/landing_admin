@@ -75,6 +75,22 @@ class Main extends CI_Controller {
 			$v->name = $this->drivenlib->decrypt($v->name);
 		}
 
+		foreach ($arr_result['results'] as $v){
+			switch ($v->region){
+				case 0:
+					$v->region = '서울';
+					break;
+				case 1:
+					$v->region = '경기';
+					break;
+				case 2:
+					$v->region = '인천';
+					break;
+				default:
+					break;
+			}
+		}
+
 		$arr_result['params']['search_value'] = $pre_search_value;
 
 		$data['header'] = $this->load->view('common/header','',TRUE);

@@ -174,6 +174,9 @@
 			<th>CAMPAIGN</th>
 			<th>TERM</th>
 			<th>CONTENT</th>
+			<? if(in_array($_SESSION['user'],array('csrental','ethan'))) { ?>
+				<th>지역</th>
+			<? } ?>
 			<th>상담신청일</th>
 			<th>메모</th>
 			<th>삭제</th>
@@ -204,6 +207,9 @@
 				<td><?=$row->utm_campaign;?></td>
 				<td><?=$row->utm_term;?></td>
 				<td><?=$row->utm_content;?></td>
+				<? if(in_array($_SESSION['user'],array('csrental','ethan'))) { ?>
+					<td><?=$row->region;?></td>
+				<? } ?>
 				<td><?=explode(' ',$row->created_at)[0];?></td>
 				<td>
 					<p>
