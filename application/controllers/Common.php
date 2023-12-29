@@ -86,6 +86,10 @@ class Common extends CI_Controller
 					case 0 : $region = '서울'; break;
 					case 1 : $region = '경기'; break;
 					case 2 : $region = '인천'; break;
+					case 3 : $region = '경상북도'; break;
+					case 4 : $region = '경상남도'; break;
+					case 5 : $region = '전라북도'; break;
+					case 6 : $region = '전라남도'; break;
 				}
 				$sheet -> setCellValue("J{$idx}", $region);
 				$sheet -> setCellValue("K{$idx}", $val['created_at']);
