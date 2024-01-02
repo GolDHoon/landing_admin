@@ -77,7 +77,7 @@ class Common extends CI_Controller
 			$sheet -> setCellValue("D{$idx}", $status);
 			$sheet -> setCellValue("E{$idx}", $val['utm_source']);
 			$sheet -> setCellValue("F{$idx}", $val['utm_medium']);
-			$sheet -> setCellValue("G{$idx}", $val['utm_campaign']);
+			$sheet -> setCellValue("G{$idx}", urldecode($val['utm_campaign']));
 			$sheet -> setCellValue("H{$idx}", $val['utm_term']);
 			$sheet -> setCellValue("I{$idx}", $val['utm_content']);
 			if(in_array($_SESSION['user'],array('csrental','ethan'))) {
