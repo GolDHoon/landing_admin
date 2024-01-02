@@ -86,6 +86,18 @@ class Main extends CI_Controller {
 				case 2:
 					$v->region = '인천';
 					break;
+				case 3:
+					$v->region = '경상북도';
+					break;
+				case 4:
+					$v->region = '경상남도';
+					break;
+				case 5:
+					$v->region = '전라북도';
+					break;
+				case 6:
+					$v->region = '전라남도';
+					break;
 				default:
 					break;
 			}
