@@ -204,7 +204,7 @@
 				</td>
 				<td><?=$row->utm_source;?></td>
 				<td><?=$row->utm_medium;?></td>
-				<td><?=$row->utm_campaign;?></td>
+				<td><?= urldecode($row->utm_campaign);?></td>
 				<td><?=$row->utm_term;?></td>
 				<td><?=$row->utm_content;?></td>
 				<? if(in_array($_SESSION['user'],array('csrental','ethan'))) { ?>
