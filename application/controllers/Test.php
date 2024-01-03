@@ -94,11 +94,9 @@ class Test extends CI_Controller {
 		return openssl_decrypt($encrypted, $method, $key, 0, $iv);
 	}
 
-	function tt(){
-		$encryptedText = 'MDEyMzQ1Njc4OTEyMzQ1NnM3dmd0NEgvNTM3SHBsVXdHdjBhL0E9PQ==';
+	function tt($encryptedText){
 		$decryptedText = $this-> decryptString($encryptedText, DRIVEN_EN_DE_KEY);
 		debug_var('복호화된 문자열: ' . $decryptedText);
-		echo "TEST";
 	}
 
 }
