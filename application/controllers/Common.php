@@ -65,6 +65,7 @@ class Common extends CI_Controller
 		$idx = 2;
 		foreach ( $arr_lists as $val ) {
 			$status = '';
+			$date = explode(" ",$val['created_at']);
 			switch ($val['status']) {
 				case 0 : $status = '상담신청'; break;
 				case 1 : $status = '상담중'; break;
@@ -92,9 +93,9 @@ class Common extends CI_Controller
 					case 6 : $region = '전라남도'; break;
 				}
 				$sheet -> setCellValue("J{$idx}", $region);
-				$sheet -> setCellValue("K{$idx}", $val['created_at']);
+				$sheet -> setCellValue("K{$idx}", $date[0]);
 			}else{
-				$sheet -> setCellValue("J{$idx}", $val['created_at']);
+				$sheet -> setCellValue("J{$idx}", $date[0]);
 			}
 			$idx++;
 		}
