@@ -30,6 +30,8 @@ class ConsultModel extends CI_Model {
 		}
 		if(!empty($params['orderBy_condition'])){
 			$this->db->order_by('a.'.$params['orderBy_condition'], $params['orderBy_value']);
+		}else{
+			$this->db->order_by('a.created_at','DESC');
 		}
 
 
@@ -64,6 +66,8 @@ class ConsultModel extends CI_Model {
 		}
 		if(!empty($params['orderBy_condition'])){
 			$this->db->order_by('a.'.$params['orderBy_condition'], $params['orderBy_value']);
+		}else{
+			$this->db->order_by('a.created_at','DESC');
 		}
 		$this->db->limit($limit, $offset);
 		return $this->db->get()->result();
