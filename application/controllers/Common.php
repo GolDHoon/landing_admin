@@ -49,12 +49,21 @@ class Common extends CI_Controller
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet -> getActiveSheet();
 
-		if(in_array($_SESSION['user'],array('csrental','ethan'))) {
-			$cnt = 10;
-			$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','지역','상담신청일');
+
+		if($_SESSION['user'] == 'ethan'){
+			$cnt = 12;
+			$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','지역','희망지역','임플란트개수','상담신청일');
 		}else{
-			$cnt = 9;
-			$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','상담신청일');
+			if($_SESSION['user'] == 'csrental'){
+				$cnt = 10;
+				$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','지역','상담신청일');
+			}else if($_SESSION['user'] == 'koreadental'){
+				$cnt = 11;
+				$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','임플란트개수','희망지역','상담신청일');
+			}else{
+				$cnt = 9;
+				$arr_header = array('이름','전화번호','도메인','상담상태','UTM_SOURCE','UTM_MEDIUM','UTM_CAMPAIGN','UTM_TERM','UTM_CONTENT','상담신청일');
+			}
 		}
 
 		for ($i = 0 ; $i <= $cnt ; $i++){
@@ -64,6 +73,7 @@ class Common extends CI_Controller
 
 		$idx = 2;
 		foreach ( $arr_lists as $val ) {
+
 			$status = '';
 			$date = explode(" ",$val['created_at']);
 			switch ($val['status']) {
@@ -71,7 +81,9 @@ class Common extends CI_Controller
 				case 1 : $status = '상담중'; break;
 				case 2 : $status = '상담완료'; break;
 				case 3 : $status = '상담보류'; break;
+				default : break;
 			}
+
 			$sheet -> setCellValue("A{$idx}", $this->drivenlib->decrypt($val['name']));
 			$sheet -> setCellValue("B{$idx}", $this->drivenlib->decrypt($val['phone']));
 			$sheet -> setCellValue("C{$idx}", $val['domain_name']);
@@ -81,24 +93,104 @@ class Common extends CI_Controller
 			$sheet -> setCellValue("G{$idx}", urldecode($val['utm_campaign']));
 			$sheet -> setCellValue("H{$idx}", $val['utm_term']);
 			$sheet -> setCellValue("I{$idx}", $val['utm_content']);
-			if(in_array($_SESSION['user'],array('csrental','ethan'))) {
+
+			if($_SESSION['user'] == 'ethan'){
+
+				// 어드민일 경우 모두 보이게
 				$region = '';
-				switch ($val['region']) {
-					case 0 : $region = '서울'; break;
-					case 1 : $region = '경기'; break;
-					case 2 : $region = '인천'; break;
-					case 3 : $region = '경상북도'; break;
-					case 4 : $region = '경상남도'; break;
-					case 5 : $region = '전라북도'; break;
-					case 6 : $region = '전라남도'; break;
+				if($val['region'] >= 0) {
+					switch ($val['region']) {
+						case 0 : $region = '서울'; break;
+						case 1 : $region = '경기'; break;
+						case 2 : $region = '인천'; break;
+						case 3 : $region = '경상북도'; break;
+						case 4 : $region = '경상남도'; break;
+						case 5 : $region = '전라북도'; break;
+						case 6 : $region = '전라남도'; break;
+						default : break;
+					}
 				}
+
+				$koreadental_region = '';
+				if($val['koreadental_region'] > 0){
+					switch ($val['koreadental_region']) {
+						case 0 : $koreadental_region = '강남점'; break;
+						case 1 : $koreadental_region = '인천점'; break;
+						default : break;
+					}
+				}
+
+				$koreadental_cnt = '';
+				if($val['koreadental_cnt'] > 0){
+					switch ($val['koreadental_cnt']) {
+						case 0 : $koreadental_cnt = '1~3개'; break;
+						case 1 : $koreadental_cnt = '4개 이상'; break;
+						case 2 : $koreadental_cnt = '전체'; break;
+						case 3 : $koreadental_cnt = '확인필요'; break;
+						default : break;
+					}
+				}
+
 				$sheet -> setCellValue("J{$idx}", $region);
-				$sheet -> setCellValue("K{$idx}", $date[0]);
+				$sheet -> setCellValue("K{$idx}", $koreadental_region);
+				$sheet -> setCellValue("L{$idx}", $koreadental_cnt);
+				$sheet -> setCellValue("M{$idx}", $date[0]);
+
 			}else{
-				$sheet -> setCellValue("J{$idx}", $date[0]);
+
+				if($_SESSION['user'] == 'csrental'){
+
+					$region = '';
+					if($val['region'] > 0) {
+						switch ($val['region']) {
+							case 0 : $region = '서울'; break;
+							case 1 : $region = '경기'; break;
+							case 2 : $region = '인천'; break;
+							case 3 : $region = '경상북도'; break;
+							case 4 : $region = '경상남도'; break;
+							case 5 : $region = '전라북도'; break;
+							case 6 : $region = '전라남도'; break;
+							default : break;
+						}
+					}
+
+					$sheet -> setCellValue("J{$idx}", $region);
+					$sheet -> setCellValue("K{$idx}", $date[0]);
+
+				}else if($_SESSION['user'] == 'koreadental'){
+
+					$koreadental_region = '';
+					if($val['koreadental_region'] > 0){
+						switch ($val['koreadental_region']) {
+							case 0 : $koreadental_region = '강남점'; break;
+							case 1 : $koreadental_region = '인천점'; break;
+							default : break;
+						}
+					}
+
+					$koreadental_cnt = '';
+					if($val['koreadental_cnt'] > 0){
+						switch ($val['koreadental_cnt']) {
+							case 0 : $koreadental_cnt = '1~3개'; break;
+							case 1 : $koreadental_cnt = '4개 이상'; break;
+							case 2 : $koreadental_cnt = '전체'; break;
+							case 3 : $koreadental_cnt = '확인필요'; break;
+							default : break;
+						}
+					}
+
+					$sheet -> setCellValue("J{$idx}", $koreadental_region);
+					$sheet -> setCellValue("K{$idx}", $koreadental_cnt);
+					$sheet -> setCellValue("L{$idx}", $date[0]);
+
+				}else{
+					$sheet -> setCellValue("J{$idx}", $date[0]);
+				}
+
 			}
 			$idx++;
 		}
+
 		$prefix = 'member_';
 		$writer = IOFactory::createWriter($spreadsheet, 'Xls');
 		$filename = $prefix.date('Ymd').'.xls';

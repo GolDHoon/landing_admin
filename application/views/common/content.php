@@ -29,7 +29,7 @@
 							<option value="orderBy_name" <?php if($params['orderBy_condition'] === 'orderBy_name') echo 'selected'?> >이름</option>
 							<option value="orderBy_phone" <?php if($params['orderBy_condition'] === 'orderBy_phone') echo 'selected'?> >전화번호</option>
 <!--							<option value="orderBy_landing_code" --><?php //if($params['orderBy_condition'] === 'orderBy_landing_code') echo 'selected'?><!-- >랜딩코드</option>-->
-							<option value="orderBy_status" <?php if($params['orderBy_condition'] === 'orderBy_status') echo 'selected'?> >상태</option>
+							<option value="orderBy_status" <?php if($params['orderBy_condition'] === 'orderBy_status') echo 'selected'?> >상담상태</option>
 							<option value="orderBy_created_at" <?php if($params['orderBy_condition'] === 'orderBy_created_at') echo 'selected'?> >날짜</option>
 						</select>
 					</div>
@@ -168,7 +168,6 @@
 			<th>NO</th>
 			<th>이름</th>
 			<th>전화번호</th>
-<!--			<th>도메인</th>-->
 			<th>상담상태</th>
 			<th>SOURCE</th>
 			<th>MEDIUM</th>
@@ -177,6 +176,10 @@
 			<th>CONTENT</th>
 			<? if(in_array($_SESSION['user'],array('csrental','ethan'))) { ?>
 				<th>지역</th>
+			<? } ?>
+			<? if(in_array($_SESSION['user'],array('koreadental','ethan'))) { ?>
+				<th>희망지역</th>
+				<th>희망개수</th>
 			<? } ?>
 			<th>상담신청일</th>
 			<th>메모</th>
@@ -194,7 +197,6 @@
 				<td><?=$i;?></td>
 				<td><?=$row->name;?></td>
 				<td><?=$row->phone;?></td>
-<!--				<td>--><?php //=$row->landing_type_value;?><!--</td>-->
 				<td>
 					<select class="form-control status_select" data-sidx="<?=$row->idx;?>">
 						<option value="0" <? if($row->status == '0') echo 'selected'; ?>>상담요청</option>
@@ -205,11 +207,15 @@
 				</td>
 				<td><?=$row->utm_source;?></td>
 				<td><?=$row->utm_medium;?></td>
-				<td><?= urldecode($row->utm_campaign);?></td>
+				<td><?=urldecode($row->utm_campaign);?></td>
 				<td><?=$row->utm_term;?></td>
 				<td><?=$row->utm_content;?></td>
 				<? if(in_array($_SESSION['user'],array('csrental','ethan'))) { ?>
 					<td><?=$row->region;?></td>
+				<? } ?>
+				<? if(in_array($_SESSION['user'],array('koreadental','ethan'))) { ?>
+					<td><?=$row->koreadental_region;?></td>
+					<td><?=$row->koreadental_cnt;?></td>
 				<? } ?>
 				<td><?=explode(' ',$row->created_at)[0];?></td>
 				<td>
