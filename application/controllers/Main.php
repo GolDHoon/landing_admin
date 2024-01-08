@@ -101,6 +101,34 @@ class Main extends CI_Controller {
 				default:
 					break;
 			}
+
+			switch ($v->koreadental_cnt){
+				case 0:
+					$v->koreadental_cnt = '1~3개';
+					break;
+				case 1:
+					$v->koreadental_cnt = '4개 이상';
+					break;
+				case 2:
+					$v->koreadental_cnt = '전체';
+					break;
+				case 3:
+					$v->koreadental_cnt = '확인필요';
+					break;
+				default:
+					break;
+			}
+
+			switch ($v->koreadental_region){
+				case 0:
+					$v->koreadental_region = '강남점';
+					break;
+				case 1:
+					$v->koreadental_region = '인천점';
+					break;
+				default:
+					break;
+			}
 		}
 
 		$arr_result['params']['search_value'] = $pre_search_value;
