@@ -98,9 +98,8 @@ class Common extends CI_Controller
 
 				// 어드민일 경우 모두 보이게
 				$region = '';
-				if($val['region'] >= 0) {
+				if(!empty($val['region'])){
 					switch ($val['region']) {
-						case 0 : $region = '서울'; break;
 						case 1 : $region = '경기'; break;
 						case 2 : $region = '인천'; break;
 						case 3 : $region = '경상북도'; break;
@@ -109,26 +108,30 @@ class Common extends CI_Controller
 						case 6 : $region = '전라남도'; break;
 						default : break;
 					}
+				} else if ($val['region'] === '0') {
+					$region = '서울';
 				}
 
 				$koreadental_region = '';
-				if($val['koreadental_region'] > 0){
+				if(!empty($val['koreadental_region'])){
 					switch ($val['koreadental_region']) {
-						case 0 : $koreadental_region = '강남점'; break;
 						case 1 : $koreadental_region = '인천점'; break;
 						default : break;
 					}
+				} else if ($val['koreadental_region'] === '0') {
+					$koreadental_region = '강남점';
 				}
 
 				$koreadental_cnt = '';
-				if($val['koreadental_cnt'] > 0){
+				if(!empty($val['koreadental_cnt'])){
 					switch ($val['koreadental_cnt']) {
-						case 0 : $koreadental_cnt = '1~3개'; break;
 						case 1 : $koreadental_cnt = '4개 이상'; break;
 						case 2 : $koreadental_cnt = '전체'; break;
 						case 3 : $koreadental_cnt = '확인필요'; break;
 						default : break;
 					}
+				} else if ($val['koreadental_cnt'] === '0') {
+					$koreadental_cnt = '1~3개';
 				}
 
 				$sheet -> setCellValue("J{$idx}", $region);
@@ -141,9 +144,8 @@ class Common extends CI_Controller
 				if($_SESSION['user'] == 'csrental'){
 
 					$region = '';
-					if($val['region'] > 0) {
+					if(!empty($val['region'])){
 						switch ($val['region']) {
-							case 0 : $region = '서울'; break;
 							case 1 : $region = '경기'; break;
 							case 2 : $region = '인천'; break;
 							case 3 : $region = '경상북도'; break;
@@ -152,6 +154,8 @@ class Common extends CI_Controller
 							case 6 : $region = '전라남도'; break;
 							default : break;
 						}
+					} else if ($val['region'] === '0') {
+						$region = '서울';
 					}
 
 					$sheet -> setCellValue("J{$idx}", $region);
@@ -160,23 +164,25 @@ class Common extends CI_Controller
 				}else if($_SESSION['user'] == 'koreadental'){
 
 					$koreadental_region = '';
-					if($val['koreadental_region'] > 0){
+					if(!empty($val['koreadental_region'])){
 						switch ($val['koreadental_region']) {
-							case 0 : $koreadental_region = '강남점'; break;
 							case 1 : $koreadental_region = '인천점'; break;
 							default : break;
 						}
+					} else if ($val['koreadental_region'] === '0') {
+						$koreadental_region = '강남점';
 					}
 
 					$koreadental_cnt = '';
-					if($val['koreadental_cnt'] > 0){
+					if(!empty($val['koreadental_cnt'])){
 						switch ($val['koreadental_cnt']) {
-							case 0 : $koreadental_cnt = '1~3개'; break;
 							case 1 : $koreadental_cnt = '4개 이상'; break;
 							case 2 : $koreadental_cnt = '전체'; break;
 							case 3 : $koreadental_cnt = '확인필요'; break;
 							default : break;
 						}
+					} else if ($val['koreadental_cnt'] === '0') {
+						$koreadental_cnt = '1~3개';
 					}
 
 					$sheet -> setCellValue("J{$idx}", $koreadental_region);
