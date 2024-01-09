@@ -77,11 +77,8 @@ class Main extends CI_Controller {
 
 		foreach ($arr_result['results'] as $v){
 
-			if($v->region >= 0){
+			if(!empty($v->region)){
 				switch ($v->region){
-					case 0:
-						$v->region = '서울';
-						break;
 					case 1:
 						$v->region = '경기';
 						break;
@@ -103,13 +100,12 @@ class Main extends CI_Controller {
 					default:
 						break;
 				}
+			} else if ($v->region === '0') {
+				$v->region = '서울';
 			}
 
-			if($v->koreadental_cnt >= 0){
+			if(!empty($v->koreandental_cnt)){
 				switch ($v->koreadental_cnt){
-					case 0:
-						$v->koreadental_cnt = '1~3개';
-						break;
 					case 1:
 						$v->koreadental_cnt = '4개 이상';
 						break;
@@ -122,19 +118,20 @@ class Main extends CI_Controller {
 					default:
 						break;
 				}
+			} else if ($v->koreadental_cnt === '0') {
+				$v->koreadental_cnt = '1~3개';
 			}
 
-			if($v->koreadental_region >= 0){
+			if(!empty($v->koreadental_region)){
 				switch ($v->koreadental_region){
-					case 0:
-						$v->koreadental_region = '강남점';
-						break;
 					case 1:
 						$v->koreadental_region = '인천점';
 						break;
 					default:
 						break;
 				}
+			} else if ($v->koreadental_region === '0') {
+				$v->koreadental_region = '강남점';
 			}
 
 		}
