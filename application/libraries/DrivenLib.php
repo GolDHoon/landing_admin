@@ -54,7 +54,9 @@ class DrivenLib{
 		$config['use_page_numbers'] = TRUE;
 		$config['query_string_segment'] = 'page';
 		$config['reuse_query_string'] = TRUE;
-		$config['suffix'] = "&orderBy_condition={$params['orderBy_condition']}&orderBy_value={$params['orderBy_value']}";
+		if(!empty($params['orderBy_condition'])){
+			$config['suffix'] = "&orderBy_condition={$params['orderBy_condition']}&orderBy_value={$params['orderBy_value']}";
+		}
 		$config['first_link'] = '<<';
 		$config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
 		$config['first_tag_close'] = '</span></li>';

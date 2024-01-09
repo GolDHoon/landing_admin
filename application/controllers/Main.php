@@ -76,59 +76,67 @@ class Main extends CI_Controller {
 		}
 
 		foreach ($arr_result['results'] as $v){
-			switch ($v->region){
-				case 0:
-					$v->region = '서울';
-					break;
-				case 1:
-					$v->region = '경기';
-					break;
-				case 2:
-					$v->region = '인천';
-					break;
-				case 3:
-					$v->region = '경상북도';
-					break;
-				case 4:
-					$v->region = '경상남도';
-					break;
-				case 5:
-					$v->region = '전라북도';
-					break;
-				case 6:
-					$v->region = '전라남도';
-					break;
-				default:
-					break;
+
+			if($v->region > 0){
+				switch ($v->region){
+					case 0:
+						$v->region = '서울';
+						break;
+					case 1:
+						$v->region = '경기';
+						break;
+					case 2:
+						$v->region = '인천';
+						break;
+					case 3:
+						$v->region = '경상북도';
+						break;
+					case 4:
+						$v->region = '경상남도';
+						break;
+					case 5:
+						$v->region = '전라북도';
+						break;
+					case 6:
+						$v->region = '전라남도';
+						break;
+					default:
+						break;
+				}
 			}
 
-			switch ($v->koreadental_cnt){
-				case 0:
-					$v->koreadental_cnt = '1~3개';
-					break;
-				case 1:
-					$v->koreadental_cnt = '4개 이상';
-					break;
-				case 2:
-					$v->koreadental_cnt = '전체';
-					break;
-				case 3:
-					$v->koreadental_cnt = '확인필요';
-					break;
-				default:
-					break;
+			if($v->koreadental_cnt > 0){
+				switch ($v->koreadental_cnt){
+					case 0:
+						$v->koreadental_cnt = '1~3개';
+						break;
+					case 1:
+						$v->koreadental_cnt = '4개 이상';
+						break;
+					case 2:
+						$v->koreadental_cnt = '전체';
+						break;
+					case 3:
+						$v->koreadental_cnt = '확인필요';
+						break;
+					default:
+						break;
+				}
 			}
 
-			switch ($v->koreadental_region){
-				case 0:
-					$v->koreadental_region = '강남점';
-					break;
-				case 1:
-					$v->koreadental_region = '인천점';
-					break;
-				default:
-					break;
+			if($v->koreadental_region > 0){
+				switch ($v->koreadental_region){
+					case 0:
+						$v->koreadental_region = '강남점';
+						break;
+					case 1:
+						$v->koreadental_region = '인천점';
+						break;
+					default:
+						break;
+				}
 			}
+
 		}
 
 		$arr_result['params']['search_value'] = $pre_search_value;
