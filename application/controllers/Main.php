@@ -77,7 +77,7 @@ class Main extends CI_Controller {
 
 		foreach ($arr_result['results'] as $v){
 
-			if($v->region > 0){
+			if($v->region >= 0){
 				switch ($v->region){
 					case 0:
 						$v->region = '서울';
@@ -105,7 +105,7 @@ class Main extends CI_Controller {
 				}
 			}
 
-			if($v->koreadental_cnt > 0){
+			if($v->koreadental_cnt >= 0){
 				switch ($v->koreadental_cnt){
 					case 0:
 						$v->koreadental_cnt = '1~3개';
@@ -124,7 +124,7 @@ class Main extends CI_Controller {
 				}
 			}
 
-			if($v->koreadental_region > 0){
+			if($v->koreadental_region >= 0){
 				switch ($v->koreadental_region){
 					case 0:
 						$v->koreadental_region = '강남점';
