@@ -217,7 +217,7 @@
 					<td><?=$row->koreadental_region;?></td>
 					<td><?=$row->koreadental_cnt;?></td>
 				<? } ?>
-				<td><?=explode(' ',$row->created_at)[0];?></td>
+				<td><?=$row->created_at;?></td>
 				<td>
 					<p>
 						<textarea name="" id="" class="memo form-control" data-idx="<?=$row->idx;?>" cols="20" rows="3"><?=$row->memo;?></textarea>
