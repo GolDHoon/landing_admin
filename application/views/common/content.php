@@ -181,6 +181,9 @@
 				<th>희망지역</th>
 				<th>희망개수</th>
 			<? } ?>
+			<? if(in_array($_SESSION['user'],array('finance','ethan'))) { ?>
+				<th>상담가능시간</th>
+			<? } ?>
 			<th>상담신청일</th>
 			<th>메모</th>
 			<th>삭제</th>
@@ -216,6 +219,9 @@
 				<? if(in_array($_SESSION['user'],array('koreadental','ethan'))) { ?>
 					<td><?=$row->koreadental_region;?></td>
 					<td><?=$row->koreadental_cnt;?></td>
+				<? } ?>
+				<? if(in_array($_SESSION['user'],array('finance','ethan'))) { ?>
+					<th><?=$row->finance_consult_time;?></th>
 				<? } ?>
 				<td><?=$row->created_at;?></td>
 				<td>
