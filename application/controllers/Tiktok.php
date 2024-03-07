@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Test extends CI_Controller {
+class Tiktok extends CI_Controller
+{
 
 	var $data = array();
 	var $user_agent = "";
@@ -13,90 +14,207 @@ class Test extends CI_Controller {
 		parent::__construct();
 
 		$this->load->model(
-			array('AccessLog','ConsultModel')
+			array('')
 		);
-
-		$this->user_agent = $_SERVER['HTTP_USER_AGENT'];
-		$this->ip = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
 
 	}
 
-	// 로그인 페이지
-	public function index()
-	{
 
-		$params = array(
-			'user_agent' => $this->user_agent,
-			'ip' => $this->ip,
-			// TODO landing_code 넣어야함
-			'landing_code' => '',
-			'created_at' => date('Y-m-d H:i:s'),
+	public function getAccessToken(){
+
+		$curl = curl_init();
+		$access_token = '';
+		$advertiser_ids = [];
+
+		$arr_data = array(
+			'app_id' => '7286018889811492866',
+			'auth_code' => '8248741e20a7724efc2a4620a97511e61a1404d5',
+			'secret' => 'b6b2139faf84a7bbb16a6bbf79f92a9262822eca'
 		);
-		$this->AccessLog->insert_access_log($params);
-		$data = $this->data;
-		$data['header'] = $this->load->view('common/header','',TRUE);
-		$data['footer'] = $this->load->view('common/footer','',TRUE);
-		$this->load->view('test',$data);
-	}
 
-	public function test_member(){
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => 'https://business-api.tiktok.com/open_api/v1.3/oauth2/access_token/',
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+			CURLOPT_POSTFIELDS => json_encode($arr_data),
+			CURLOPT_HTTPHEADER => array(
+				'Content-Type: application/json'
+			),
+		));
 
-		$name = $this->input->get('name',true);
-		$phone = $this->input->get('phone',true);
-		$mode = $this->input->get('mode');
-		$utm_source = $this->input->get('utm_source') ?? '';
-		$utm_medium = $this->input->get('utm_medium') ?? '';
-		$utm_campaign = $this->input->get('utm_campaign') ?? '';
-		$utm_term = $this->input->get('utm_term') ?? '';
+		$response = curl_exec($curl);
+		curl_close($curl);
 
-
-		if($mode === '1'){
-			$params = array(
-				'user_agent' => $this->user_agent,
-				'ip' => $this->ip,
-				// TODO landing_code 필수
-				'landing_code' => '1234',
-				// TODO 발급된 admin_code 필수
-				'admin_code' => '1234',
-				'created_at' => date('Y-m-d H:i:s'),
-				'name' => $name,
-				'phone' => $phone,
-				'utm_source' => $utm_source,
-				'utm_medium' => $utm_medium,
-				'utm_campaign' => $utm_campaign,
-				'utm_term' => $utm_term,
-			);
-			$this->ConsultModel->insert_request_member($params);
+		$response = json_decode($response,true);
+		debug_var($response);
+		if($response['code'] == 0){
+			return $response['data'];
+		}else{
+			return null;
 		}
 
+		// faae2e181fa67684674b29e58736144f80a779ae
+
+	}
+
+	// 오디언스
+	public function getQualifiedLeads(){
+
+		$curl = curl_init();
+
+		$access_token = '7f4258d80513f51324eefe701c74188643e7c586';
+
+		$args[0] = '7221049888014876674';
+
+		$url = 'https://business-api.tiktok.com/open_api/v1.3/dmp/custom_audience/list';
+
+		$url_param = "";
+		foreach ($args as $k => $v){
+			if($k == 0){
+				$url_param .= "?advertiser_id=".$v;
+			}else{
+				$url_param .= "&advertiser_id=".$v;
+			}
+		}
+
+		$url = $url . $url_param;
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => $url,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'GET',
+			CURLOPT_HTTPHEADER => array(
+				"Access-Token: ${access_token}"
+			),
+		));
+
+		$response = curl_exec($curl);
+
+		curl_close($curl);
+		echo $response;
+
+	}
+
+	// 오디언스 디테일
+	public function getQualifiedLeadsDetails(){
+
+		$access_token = '7f4258d80513f51324eefe701c74188643e7c586';
+
+		$curl = curl_init();
+
+		$custom_audience_ids = array('172855897','172855894');
+
+		$url = "https://business-api.tiktok.com/open_api/v1.3/dmp/custom_audience/get";
+		$url_params = "?advertiser_id=7221049888014876674&custom_audience_ids=".json_encode($custom_audience_ids);
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => $url . $url_params,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'GET',
+			CURLOPT_HTTPHEADER => array(
+				"Access-Token: ${access_token}"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$response = json_decode($response,true);
+		curl_close($curl);
+//		debug_var($response);
+		debug_var($response['data']['list'][0]['audience_details']);
 	}
 
 
-	function encryptString($input, $key) {
-		$method = 'aes-256-cbc';
-		$encrypted = openssl_encrypt($input, $method, $key, 0, DRIVEN_IV_KEY);
-		return base64_encode(DRIVEN_IV_KEY . $encrypted);
+	public function createLeads(){
+
+		$access_token = '7f4258d80513f51324eefe701c74188643e7c586';
+
+		$advertiser_id = "7281569074709315586";
+		$page_id = "7302323281934156034";
+		$task_id = "7324115845269963054";
+
+		$curl = curl_init();
+
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://business-api.tiktok.com/open_api/v1.3/page/lead/task/?advertiser_id={$advertiser_id}&page_id={$page_id}&task_id={$task_id}",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+			CURLOPT_HTTPHEADER => array(
+				'x-lead-region: us',
+				"Access-Token: ${access_token}"
+			),
+		));
+
+		$response = curl_exec($curl);
+		$response = json_decode($response,true);
+		curl_close($curl);
+
+		// task_id 추출
+		debug_var($response);
+
 	}
 
-	function t($plaintext){
-		$encryptedText = $this->encryptString($plaintext, DRIVEN_EN_DE_KEY);
-		debug_var($encryptedText);
-	}
+	public function downloadLeads(){
 
+		$curl = curl_init();
 
-	function decryptString($input, $key) {
-		$method = 'aes-256-cbc';
+		$access_token = '7f4258d80513f51324eefe701c74188643e7c586';
 
-		$input = base64_decode($input);
-		$iv = substr($input, 0, 16);
-		$encrypted = substr($input, 16);
+		$advertiser_id = "7281569074709315586";
+		$task_id = "7330050138428719362";
 
-		return openssl_decrypt($encrypted, $method, $key, 0, $iv);
-	}
+		curl_setopt_array($curl, array(
+			CURLOPT_URL => "https://business-api.tiktok.com/open_api/v1.3/page/lead/task/download/?advertiser_id={$advertiser_id}&task_id={$task_id}",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'GET',
+			CURLOPT_HTTPHEADER => array(
+				"Access-Token: ${access_token}",
+			),
+		));
 
-	function tt($encryptedText){
-		$decryptedText = $this-> decryptString($encryptedText, DRIVEN_EN_DE_KEY);
-		debug_var('복호화된 문자열: ' . $decryptedText);
+		$response = curl_exec($curl);
+
+		curl_close($curl);
+//		var_dump($response);
+//		exit;
+
+		$date = date("Ymd_His");
+		// 파일 다운로드를 위한 헤더 설정
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header("Content-Disposition: attachment; filename='${date}.csv'");
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . strlen($response));
+//
+//		// 파일 내용을 출력
+		echo $response;
+
 	}
 
 }
