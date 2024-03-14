@@ -221,7 +221,11 @@
 					<td><?=$row->koreadental_cnt;?></td>
 				<? } ?>
 				<? if(in_array($_SESSION['user'],array('finance','ethan'))) { ?>
-					<th><?=$row->finance_consult_time;?></th>
+					<td><?=$row->finance_consult_time;?></td>
+				<? } ?>
+				<? if(in_array($_SESSION['user'],array('beautymedical','ethan'))) { ?>
+					<td><?=$row->half_region;?></td>
+					<td><?=$row->half_symptom;?></td>
 				<? } ?>
 				<td><?=$row->created_at;?></td>
 				<td>
