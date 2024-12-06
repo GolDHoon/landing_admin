@@ -75,7 +75,8 @@ class Common extends CI_Controller
 		foreach ( $arr_lists as $val ) {
 
 			$status = '';
-			$date = explode(" ",$val['created_at']);
+//			$date = explode(" ",$val['created_at']);
+			$date = $val['created_at'];
 			switch ($val['status']) {
 				case 0 : $status = '상담신청'; break;
 				case 1 : $status = '상담중'; break;
@@ -137,7 +138,7 @@ class Common extends CI_Controller
 				$sheet -> setCellValue("J{$idx}", $region);
 				$sheet -> setCellValue("K{$idx}", $koreadental_region);
 				$sheet -> setCellValue("L{$idx}", $koreadental_cnt);
-				$sheet -> setCellValue("M{$idx}", $date[0]);
+				$sheet -> setCellValue("M{$idx}", $date);
 
 			}else{
 
@@ -159,7 +160,7 @@ class Common extends CI_Controller
 					}
 
 					$sheet -> setCellValue("J{$idx}", $region);
-					$sheet -> setCellValue("K{$idx}", $date[0]);
+					$sheet -> setCellValue("K{$idx}", $date);
 
 				}else if($_SESSION['user'] == 'koreadental'){
 
@@ -187,10 +188,10 @@ class Common extends CI_Controller
 
 					$sheet -> setCellValue("J{$idx}", $koreadental_region);
 					$sheet -> setCellValue("K{$idx}", $koreadental_cnt);
-					$sheet -> setCellValue("L{$idx}", $date[0]);
+					$sheet -> setCellValue("L{$idx}", $date);
 
 				}else{
-					$sheet -> setCellValue("J{$idx}", $date[0]);
+					$sheet -> setCellValue("J{$idx}", $date);
 				}
 
 			}
